@@ -19,7 +19,8 @@ sudo udevadm control --reload
 sudo systemctl stop ModemManager
 sudo systemctl disable ModemManager
 
-sudo apt install cifs-utils picocom minicom dos2unix libncurses5 net-tools
+# vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，
+sudo apt install cifs-utils picocom minicom dos2unix libncurses5 net-tools libfuse2
 
 # 定义要添加的内容
 content='
