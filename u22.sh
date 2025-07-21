@@ -58,3 +58,7 @@ fi
 echo "$content" >> "$config_file"
 echo "Configurations added to $config_file"
 
+#nmblookup可以查看主机名对应的ip
+#echo “//192.168.1.157/7-release /home/ren/Desktop/share/liangjiahao cifs vers=3.0,uid=1000,gid=1000,defaults,nofail,x-systemd.automount 0 0” >> /etc/fstab
+
+
