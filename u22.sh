@@ -19,9 +19,18 @@ sudo udevadm control --reload
 sudo systemctl stop ModemManager
 sudo systemctl disable ModemManager
 
-# vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，
-sudo apt install cifs-utils picocom minicom dos2unix libncurses5 net-tools libfuse2
+# vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，fcitx5,截图脚本需要的工具,
+sudo apt install -y \
+  cifs-utils picocom minicom dos2unix libncurses5 net-tools libfuse2 fonts-firacode \
+  fcitx5 fcitx5-chinese-addons \
+  fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 \
+  fcitx5-frontend-qt5 fcitx5-config-qt \
+  drawing wl-clipboard gnome-screenshot
 
+
+
+
+##################################  zsh config
 # 定义要添加的内容
 content='
 # Custom PATH and alias configurations
@@ -66,3 +75,37 @@ echo "Configurations added to $config_file"
 cp src/* ~/.local/share/applications/
 #更新启动器索引
 update-desktop-database
+
+
+######################################### .profile config
+# 定义要添加的内容
+content='
+#waland下对某些程序的兼容变量。
+#export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM=xbc
+
+#输入法设置
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+export DefaultIMModule=fcitx
+'
+  config_file="$HOME/.profile"
+
+# 向相应的配置文件写入内容
+echo "$content" >> "$config_file"
+echo "Configurations added to $config_file"
+
+#添加windows共享文件夹，nautilus挂载会提示参数错误，nmblookup可以查看主机名对应的ip
+#echo “//192.168.1.157/7-release /home/ren/Desktop/share/liangjiahao cifs vers=3.0,uid=1000,gid=1000,defaults,nofail,x-systemd.automount 0 0” >> /etc/fstab
+
+#基于 Electron 开发的软件在wayland的分数缩放下需要添加特定的启动参数，：https://yangqiuyi.com/blog/linux/%E5%9C%A8wayland%E6%A8%A1%E5%BC%8F%E7%9A%84vscode%E4%B8%AD%E4%BD%BF%E7%94%A8fcitx5%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87/
+cp src/code* ~/.local/share/applications/
+cp src/cursor* ~/.local/share/applications/
+#更新启动器索引
+update-desktop-database
+
+
+######################################### screen config
+cp src/screen.sh ~/.local/bin/
+# 添加快捷键
