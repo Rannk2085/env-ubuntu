@@ -47,6 +47,8 @@ sudo dpkg -i gconf2-common_3.2.6-7ubuntu2_all.deb
 sudo dpkg -i libgconf-2-4_3.2.6-7ubuntu2_amd64.deb
 sudo apt -f install -y
 ldconfig -p | grep libgconf || echo "❌ libgconf 安装失败"
+# 安装python3 在安装esp-idf时缺少的库
+sudo apt install python3.12-venv
 # 定义要添加的内容
 content='
 export XMODIFIERS=@im=fcitx
