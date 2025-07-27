@@ -118,7 +118,27 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Created by `pipx` on 2023-11-27 12:46:09
-export PATH="$PATH:/home/rjn/.local/bin"
+export PATH="$PATH:/home/ren/.local/bin"
+
+
+# Custom PATH and alias configurations
+
+# Add local bin to PATH
+export PATH="$PATH:/home/ren/.local/bin"
+
+# Aliases for GCC versions
+alias gcc11="sudo update-alternatives --set gcc /usr/bin/gcc-13 && sudo update-alternatives --set g++ /usr/bin/g++-13"
+alias gcc12="sudo update-alternatives --set gcc /usr/bin/gcc-12 && sudo update-alternatives --set g++ /usr/bin/g++-12"
+
+# Get IDF environment variables
+alias get_idf=". $HOME/esp/esp-idf/export.sh"
+
+# Add rtk-project to PATH
+export PATH=$PATH:/home/ren/rtk-project/rtk-work-Rannk-gitea/spbe-rtk
+
+# Add arm toolchain to PATH
+export PATH=$PATH:/home/ren/.local/bin/gcc-arm-none-eabi-10.3-2021.10/bin
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

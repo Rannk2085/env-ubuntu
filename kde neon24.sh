@@ -24,19 +24,37 @@ sudo systemctl disable ModemManager
 ####################### 软件安装
 # vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，fcitx5,截图脚本需要的工具,
 sudo apt install -y \
-  cifs-utils picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
+  cifs-utils exfatprogs picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
   fcitx5 fcitx5-chinese-addons \
   fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 \
-  fcitx5-frontend-qt5 fcitx5-config-qt \
-  drawing wl-clipboard gnome-screenshot
+  fcitx5-frontend-qt5 fcitx5-config-qt
 # 先安装依赖包，然后安装libncurses5 以支持vscode调试。
 sudo apt install pkg/libtinfo5_6.4-4_amd64.deb
 sudo apt install pkg/libncurses5_6.4-4_amd64.deb
+# 安装betaflight configurator需要的ubuntu22 老库
+sudo apt remove -y libgconf-2-4 gconf2-common || true
+sudo apt autoremove -y
+wget -c http://mirrors.ustc.edu.cn/ubuntu/pool/universe/g/gconf/gconf2-common_3.2.6-7ubuntu2_all.deb
+wget -c http://mirrors.ustc.edu.cn/ubuntu/pool/universe/g/gconf/libgconf-2-4_3.2.6-7ubuntu2_amd64.deb
+sudo dpkg -i gconf2-common_3.2.6-7ubuntu2_all.deb
+sudo dpkg -i libgconf-2-4_3.2.6-7ubuntu2_amd64.deb
+sudo apt -f install -y
+ldconfig -p | grep libgconf || echo "❌ libgconf 安装失败"
+# 定义要添加的内容
+content='
+export XMODIFIERS=@im=fcitx
+'
+  config_file="$HOME/.profile"
+# 向相应的配置文件写入内容
+echo "$content" >> "$config_file"
+echo "Configurations added to $config_file"
+
 
 
 
 ##################################  zsh config
 # 定义要添加的内容
+sudo apt install zsh
 chsh -s /bin/zsh
 sudo chsh -s /bin/zsh
 # 跟换shell
@@ -49,69 +67,11 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 # 安装主题
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-cp src/.zshrc /home/rjn/.zshrc
-content='
-# Custom PATH and alias configurations
-
-# Add local bin to PATH
-export PATH="$PATH:/home/rjn/.local/bin"
-
-# Aliases for GCC versions
-alias gcc11="sudo update-alternatives --set gcc /usr/bin/gcc-13 && sudo update-alternatives --set g++ /usr/bin/g++-13"
-alias gcc12="sudo update-alternatives --set gcc /usr/bin/gcc-12 && sudo update-alternatives --set g++ /usr/bin/g++-12"
-
-# Get IDF environment variables
-alias get_idf=". $HOME/esp/esp-idf/export.sh"
-
-# Add rtk-project to PATH
-export PATH=$PATH:/home/ren/rtk-project/rtk-work-Rannk-gitea/spbe-rtk
-
-# Add arm toolchain to PATH
-export PATH=$PATH:/home/ren/.local/bin/gcc-arm-none-eabi-10.3-2021.10/bin
-'
-# 判断当前 shell 类型并决定配置文件
-if [ -n "$ZSH_VERSION" ]; then
-  # 当前 shell 是 zsh，写入 .zshrc
-  config_file="$HOME/.zshrc"
-elif [ -n "$BASH_VERSION" ]; then
-  # 当前 shell 是 bash，写入 .bashrc
-  config_file="$HOME/.bashrc"
-else
-  echo "Unsupported shell. Exiting..."
-  exit 1
-fi
-
-# 向相应的配置文件写入内容
-echo "$content" >> "$config_file"
-echo "Configurations added to $config_file"
-
-#添加windows共享文件夹，nautilus挂载会提示参数错误，nmblookup可以查看主机名对应的ip
-#echo “//192.168.1.157/7-release /home/ren/Desktop/share/liangjiahao cifs vers=3.0,uid=1000,gid=1000,defaults,nofail,x-systemd.automount 0 0” >> /etc/fstab
-
-#基于 Electron 开发的软件在wayland的分数缩放下需要添加特定的启动参数，：https://yangqiuyi.com/blog/linux/%E5%9C%A8wayland%E6%A8%A1%E5%BC%8F%E7%9A%84vscode%E4%B8%AD%E4%BD%BF%E7%94%A8fcitx5%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87/
-# cp src/* ~/.local/share/applications/
-#更新启动器索引
-# update-desktop-database
+cp src/.zshrc /home/ren/.zshrc
 
 
-######################配置环境变量 .profile config
-# 定义要添加的内容
-content='
-#waland下对某些程序的兼容变量。
-#export QT_QPA_PLATFORM=wayland
-# export QT_QPA_PLATFORM=xbc
 
-#输入法设置
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-export DefaultIMModule=fcitx
-'
-  config_file="$HOME/.profile"
 
-# 向相应的配置文件写入内容
-echo "$content" >> "$config_file"
-echo "Configurations added to $config_file"
 
 #添加windows共享文件夹，nautilus挂载会提示参数错误，nmblookup可以查看主机名对应的ip
 #echo “//192.168.1.157/7-release /home/ren/Desktop/share/liangjiahao cifs vers=3.0,uid=1000,gid=1000,defaults,nofail,x-systemd.automount 0 0” >> /etc/fstab
