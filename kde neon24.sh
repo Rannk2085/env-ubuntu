@@ -93,3 +93,8 @@ cp src/.zshrc /home/ren/.zshrc
 ######################################### screen config
 # cp src/screen.sh ~/.local/bin/
 # 添加快捷键
+
+# 添加cursor icon
+mkdir -p ~/.local/share/icons/hicolor/128x128/apps/
+cp icon/cursor.png ~/.local/share/icons/hicolor/128x128/apps/cursor.png
+
