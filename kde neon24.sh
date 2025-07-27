@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# 启动参数，cursor需要no-sandbox,
+# --no-sandbox --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=1 %F
+
 ##################  C/C++配置，gcc12是为了mware
 sudo apt install vim git build-essential
 sudo apt install gcc-12 g++-12
@@ -28,9 +32,12 @@ sudo apt install -y \
   fcitx5 fcitx5-chinese-addons \
   fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 \
   fcitx5-frontend-qt5 fcitx5-config-qt
+# 安装补充字体
+sudo apt install -y fonts-noto-cjk fonts-arphic-uming fonts-wqy-zenhei fonts-wqy-microhei fonts-hanazono
+# 使用pkcon安装office
+pkcon install libreoffice
 # 先安装依赖包，然后安装libncurses5 以支持vscode调试。
-sudo apt install pkg/libtinfo5_6.4-4_amd64.deb
-sudo apt install pkg/libncurses5_6.4-4_amd64.deb
+sudo apt install ./pkg/libtinfo5_6.4-4_amd64.deb ./pkg/libncurses5_6.4-4_amd64.deb
 # 安装betaflight configurator需要的ubuntu22 老库
 sudo apt remove -y libgconf-2-4 gconf2-common || true
 sudo apt autoremove -y
