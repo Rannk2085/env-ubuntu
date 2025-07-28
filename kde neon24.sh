@@ -30,7 +30,7 @@ sudo systemctl disable ModemManager
 sudo apt install -y \
   cifs-utils exfatprogs picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
   fcitx5 fcitx5-chinese-addons \
-  fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 \
+  fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 fcitx5-material-color\
   fcitx5-frontend-qt5 fcitx5-config-qt
 # 安装补充字体
 sudo apt install -y fonts-noto-cjk fonts-arphic-uming fonts-wqy-zenhei fonts-wqy-microhei fonts-hanazono
