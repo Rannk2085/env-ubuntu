@@ -4,7 +4,7 @@
 # --no-sandbox --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=1 %F
 
 ##################  C/C++配置，gcc12是为了mware
-sudo apt install vim git build-essential
+sudo apt install vim git wget build-essential
 sudo apt install gcc-12 g++-12
 gcc-11 --version
 gcc-12 --version
@@ -19,7 +19,8 @@ sudo update-alternatives --config g++
 ##################### usb udev rules 针对bf 烧录规则
 sudo usermod -a -G dialout $USER
 sudo usermod -a -G plugdev $USER
-echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="****", GROUP="plugdev", MODE="0664"' | sudo tee /etc/udev/rules.d/45-stm32.rules
+echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="****", GROUP="plugdev", MODE="0664", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/45-stm32.rules
+echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="2e3c", ATTRS{idProduct}=="****", GROUP="plugdev", MODE="0664", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/45-stm32.rules
 sudo udevadm control --reload
 sudo systemctl stop ModemManager
 sudo systemctl disable ModemManager
@@ -28,7 +29,7 @@ sudo systemctl disable ModemManager
 ####################### 软件安装
 # vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，fcitx5,截图脚本需要的工具,
 sudo apt install -y \
-  cifs-utils exfatprogs picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
+  cifs-utils exfatprogs p7zip-full picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
   fcitx5 fcitx5-chinese-addons \
   fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 fcitx5-material-color\
   fcitx5-frontend-qt5 fcitx5-config-qt
@@ -49,10 +50,11 @@ sudo apt -f install -y
 ldconfig -p | grep libgconf || echo "❌ libgconf 安装失败"
 # 安装python3 在安装esp-idf时缺少的库
 sudo apt install python3.12-venv
+# 安装libreoffice和中文支持
+sudo apt install libreoffice libreoffice-l10n-zh-cn libreoffice-help-zh-cn
 # 定义要添加的内容
 content='
-export XMODIFIERS=@im=fcitx
-'
+export XMODIFIERS=@im=fcitx'
   config_file="$HOME/.profile"
 # 向相应的配置文件写入内容
 echo "$content" >> "$config_file"
@@ -100,3 +102,9 @@ cp src/.zshrc /home/ren/.zshrc
 mkdir -p ~/.local/share/icons/hicolor/128x128/apps/
 cp icon/cursor.png ~/.local/share/icons/hicolor/128x128/apps/cursor.png
 
+# ################### 推荐中英文字体, --typora有字体模糊现象，默认终端模拟器等宽字体排列有问题，只能用hack，建议ubuntu sanc
+# wget https://github.com/be5invis/Sarasa-Gothic/releases/download/v1.0.32/SarasaGothic-TTF-1.0.32.7z 
+# # -o不加空格
+# 7z x SarasaGothic-TTF-1.0.32.7z -osarasa
+# sudo mv sarasa /usr/local/share/fonts
+# echo "已安装sarasa字体，建议在字体中切换到sarasa中英字体哦"
