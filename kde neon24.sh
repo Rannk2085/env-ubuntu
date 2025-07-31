@@ -4,7 +4,10 @@
 # --no-sandbox --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=1 %F
 
 ##################  C/C++配置，gcc12是为了mware
-sudo apt install vim git wget build-essential
+sudo apt install vim git wget build-essential cmake cmake ninja-build \
+  libncurses-dev libreadline-dev libssl-dev libelf-dev flex bison \
+  libusb-1.0-0-dev libudev-dev libhidapi-dev libftdi-dev \
+  python3-pip python3-setuptools python3-wheel python3-venv
 sudo apt install gcc-12 g++-12
 gcc-11 --version
 gcc-12 --version
