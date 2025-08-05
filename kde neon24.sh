@@ -32,7 +32,7 @@ sudo systemctl disable ModemManager
 ####################### 软件安装
 # vscode调试报错lib，net工具，com工具，转换ubix格式工具，Cursor的fuse环境，fcitx5,截图脚本需要的工具,
 sudo apt install -y \
-  cifs-utils exfatprogs p7zip-full picocom minicom dos2unix net-tools libfuse2 fonts-firacode \
+  cifs-utils exfatprogs p7zip-full picocom minicom dos2unix net-tools libfuse2 fonts-firacode gvfs-backends gvfs-fuse\
   fcitx5 fcitx5-chinese-addons \
   fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 fcitx5-material-color\
   fcitx5-frontend-qt5 fcitx5-config-qt
