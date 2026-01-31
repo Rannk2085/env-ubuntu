@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Cursor
+Comment=AI-powered code editor
+GenericName=Text Editor
+Exec=cursor --ozone-platform-hint=auto --enable-wayland-ime --wayland-text-input-version=3 %F
+Icon=cursor
+Type=Application
+StartupNotify=false
+Categories=TextEditor;Development;IDE;
+MimeType=text/plain;inode/directory;
+Keywords=cursor;ai;code;
+Terminal=false
