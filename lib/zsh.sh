@@ -225,11 +225,43 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias grep='grep --color=auto'
 
+#=============================================================================
+# PATH 配置
+#=============================================================================
+
+# 本地 bin 目录
+export PATH="$HOME/.local/bin:$PATH"
+
+# ARM 工具链（根据需要取消注释）
+# export PATH="$PATH:$HOME/.local/bin/gcc-arm-none-eabi-10.3-2021.10/bin"
+
+# RTK 项目路径（根据需要取消注释）
+# export PATH="$PATH:$HOME/rtk-project/rtk-work-Rannk-gitea/spbe-rtk"
+
+#=============================================================================
+# 开发工具别名（根据需要取消注释）
+#=============================================================================
+
+# GCC 版本切换
+# alias gcc11='sudo update-alternatives --set gcc /usr/bin/gcc-11 && sudo update-alternatives --set g++ /usr/bin/g++-11'
+# alias gcc12='sudo update-alternatives --set gcc /usr/bin/gcc-12 && sudo update-alternatives --set g++ /usr/bin/g++-12'
+# alias gcc13='sudo update-alternatives --set gcc /usr/bin/gcc-13 && sudo update-alternatives --set g++ /usr/bin/g++-13'
+
+# ESP-IDF 环境
+# alias get_idf='. $HOME/esp/esp-idf/export.sh'
+
+#=============================================================================
+# 其他配置
+#=============================================================================
+
 # fzf 配置（如果存在）
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Powerlevel10k 配置（如果存在）
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# 加载本地自定义配置（如果存在）
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 EOF
 
     log_info ".zshrc 配置完成"

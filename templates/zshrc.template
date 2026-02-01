@@ -1,0 +1,95 @@
+# Powerlevel10k instant prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Oh My Zsh 路径
+export ZSH="$HOME/.oh-my-zsh"
+
+# 主题设置
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# 插件列表
+plugins=(
+    git                         # Git 别名和补全
+    z                           # 智能目录跳转
+    sudo                        # 双击 ESC 添加 sudo
+    extract                     # 统一解压命令
+    command-not-found           # 命令未找到提示
+    colored-man-pages           # 彩色 man 手册
+    safe-paste                  # 防止粘贴时意外执行
+    zsh-autosuggestions         # 命令自动建议
+    zsh-syntax-highlighting     # 语法高亮
+    zsh-completions             # 增强补全
+    zsh-history-substring-search # 历史子串搜索
+    fzf                         # 模糊搜索集成
+)
+
+# 加载 zsh-completions
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+
+# 加载 Oh My Zsh
+source $ZSH/oh-my-zsh.sh
+
+# history-substring-search 键绑定
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# 历史记录配置
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt SHARE_HISTORY
+
+# 其他实用设置
+setopt AUTO_CD              # 直接输入目录名即可 cd
+setopt CORRECT              # 命令纠错
+setopt COMPLETE_ALIASES     # 别名补全
+
+# 别名
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias grep='grep --color=auto'
+
+#=============================================================================
+# PATH 配置
+#=============================================================================
+
+# 本地 bin 目录
+export PATH="$HOME/.local/bin:$PATH"
+
+# ARM 工具链（根据需要取消注释）
+# export PATH="$PATH:$HOME/.local/bin/gcc-arm-none-eabi-10.3-2021.10/bin"
+
+# RTK 项目路径（根据需要取消注释）
+# export PATH="$PATH:$HOME/rtk-project/rtk-work-Rannk-gitea/spbe-rtk"
+
+#=============================================================================
+# 开发工具别名（根据需要取消注释）
+#=============================================================================
+
+# GCC 版本切换
+# alias gcc11='sudo update-alternatives --set gcc /usr/bin/gcc-11 && sudo update-alternatives --set g++ /usr/bin/g++-11'
+# alias gcc12='sudo update-alternatives --set gcc /usr/bin/gcc-12 && sudo update-alternatives --set g++ /usr/bin/g++-12'
+# alias gcc13='sudo update-alternatives --set gcc /usr/bin/gcc-13 && sudo update-alternatives --set g++ /usr/bin/g++-13'
+
+# ESP-IDF 环境
+# alias get_idf='. $HOME/esp/esp-idf/export.sh'
+
+#=============================================================================
+# 其他配置
+#=============================================================================
+
+# fzf 配置（如果存在）
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Powerlevel10k 配置（如果存在）
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# 加载本地自定义配置（如果存在）
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
